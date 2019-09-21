@@ -6,30 +6,42 @@ package MunchkinGame;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.text.JTextComponent;
+//import javax.swing.text.JTextComponent;
 
 /**
  * This class creates an object that will respond to the
  * press of a button for the MunchkinDriver class.
  * 
  * @author Patrick Morgan
- * @version 20 September 2019
+ * @version 21 September 2019
  * 
  */
 public class MunchkinListener implements ActionListener
 {
-	JTextField textField; // I dont understand this variable lol
+	JTextField powerLevel;
+	JTextField gender;
 	
-	private static int currentLevel, newLevel, operator, result;
+	private static int currentLevel, newLevel;
+	private static String currentGender;
 	
 	/**
 	 * The default constructor
 	 * 
-	 * @param tf the text field
+	 * @param powerLevelField the power level text field
 	 */
-	public MunchkinListener(JTextField tf)
+	public MunchkinListener(JTextField powerLevelField, JTextField genderField)
 	{
-		textField = tf;
+		Font font = new Font("SansSerif", Font.BOLD, 40);
+		
+		powerLevel = powerLevelField;
+		powerLevel.setPreferredSize( new Dimension(100, 100)); // Change size of textbox
+		powerLevel.setHorizontalAlignment(JTextField.CENTER); // Center align text
+		powerLevel.setFont(font);
+		
+		gender = genderField;
+		gender.setPreferredSize( new Dimension(100, 100)); // Change size of textbox
+		gender.setHorizontalAlignment(JTextField.CENTER); // Center align text
+		gender.setFont(font);
 	}
 	
 	/**
@@ -41,13 +53,22 @@ public class MunchkinListener implements ActionListener
 	public void actionPerformed(ActionEvent event)
 	{
 		if(event.getActionCommand().equals("+")) {
-			currentLevel = Integer.parseInt(textField.getText());
+			currentLevel = Integer.parseInt(powerLevel.getText());
 			newLevel = currentLevel + 1;
-			textField.setText("" + Integer.toString(newLevel));
+			powerLevel.setText("" + Integer.toString(newLevel));
 		} else if(event.getActionCommand().equals("-")) {
-			currentLevel = Integer.parseInt(textField.getText());
-			newLevel = currentLevel - 1;
-			textField.setText("" + Integer.toString(newLevel));
+			currentLevel = Integer.parseInt(powerLevel.getText());
+			if (currentLevel > 1) {
+				newLevel = currentLevel - 1;
+				powerLevel.setText("" + Integer.toString(newLevel));
+			}
+		} else if(event.getActionCommand().equals("swap")) {
+			currentGender = gender.getText();
+			if (currentGender.equalsIgnoreCase("male")) {
+				gender.setText("Female");
+			} else {
+				gender.setText("Male");
+			}
 		} 
 	}
 }

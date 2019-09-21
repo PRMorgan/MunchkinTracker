@@ -2,7 +2,7 @@ package MunchkinGame;
 
 /** A driver to run a game of Munchkin.
  * @author Patrick Morgan
- * @version 20 September 2019
+ * @version 21 September 2019
  */
 
 // TODO Keep improving GUI
@@ -13,18 +13,21 @@ import java.util.ArrayList; // import the ArrayList class
 
 // import classes for working with GUIs
 import java.awt.*;
-import java.awt.event.*;
+//import java.awt.event.*;
 import javax.swing.*;
 
-public class MunchkinDriver extends JFrame implements ActionListener
+@SuppressWarnings("serial")
+public class MunchkinDriver extends JFrame
 {
-	private JButton buttons[] = new JButton[2];
+	private JButton buttons[] = new JButton[3];
 	private String buttonCaptions[] = {
-									"-",
-									"+"
+									"-", // subtract 1 power level
+									"+", // add 1 power level
+									"swap" // swap genders
 								};
-	private JPanel buttonPanel = new JPanel(new GridLayout(2,1));
-	private JTextField output = new JTextField(20);
+	private JPanel buttonPanel = new JPanel(new GridLayout(3,1));
+	private JTextField powerLevel = new JTextField(20);
+	private JTextField gender = new JTextField(20);
 	Container frame;
 	
 	/**
@@ -35,22 +38,26 @@ public class MunchkinDriver extends JFrame implements ActionListener
 	{
 		frame = getContentPane();
 		
-		for (int buttonIndex = 0; buttonIndex < 2; buttonIndex++) {
+		for (int buttonIndex = 0; buttonIndex < 3; buttonIndex++) {
 			buttons[buttonIndex] = new JButton(buttonCaptions[buttonIndex]);
 			buttons[buttonIndex].setActionCommand(buttonCaptions[buttonIndex]);
 			buttonPanel.add(buttons[buttonIndex]);
-			buttons[buttonIndex].addActionListener(new MunchkinListener(output));
+			buttons[buttonIndex].addActionListener(new MunchkinListener(powerLevel, gender));
 		}
 		
 		frame.setLayout(new FlowLayout());
 		frame.setLayout(new BorderLayout());
-		frame.add(output, BorderLayout.NORTH);
-		frame.add(buttonPanel, BorderLayout.CENTER);
+		frame.add(powerLevel, BorderLayout.NORTH);
+		frame.add(gender, BorderLayout.CENTER);
+		frame.add(buttonPanel, BorderLayout.SOUTH);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setPreferredSize(new Dimension(350, 300));
 		pack();
 		setVisible(true);
+		
+		powerLevel.setText("1"); //This effectively sets starting level to 1
+		gender.setText("Male"); //Set starting gender is male
 	}
-	
 	
 	/** The main method to run the program.
 	 */
@@ -67,11 +74,11 @@ public class MunchkinDriver extends JFrame implements ActionListener
 	    
 	    for (int i = 0; i < numPlayers; i++) {
 	    	// prompt for the player's name
-	    	System.out.printf("Please enter the player's name: ");
+	    	System.out.printf("Player %d, please enter your name: ", i+1);
 		    String tempName = input.nextLine();
 		    
 		    // prompt for the character's initial gender
-		    System.out.printf("Please enter your character's gender: ");
+		    System.out.printf("Player %d, please enter your character's gender: ", i+1);
 		    String tempGender = input.nextLine();
 		    
 		    // create the player object
@@ -82,53 +89,10 @@ public class MunchkinDriver extends JFrame implements ActionListener
 	    }
 	    
 	    input.close();
-	
-	    for (int i = 0; i < players.size(); i++) {
-		    System.out.printf("\n%s\n%s\nMoney: %d\nLevel: %d\nPower Level: %d\n\n",
-		                      players.get(i).getPlayerName(),
-		                      players.get(i).getGender(),
-		                      players.get(i).getMoney(),
-		                      players.get(i).getCharacterLevel(),
-		                      players.get(i).getPowerLevel());
-		    
-		    System.out.println("" + players.get(i).getPlayerName() + ": Adding two levels and adding 3 power levels.");
-		    players.get(i).incrementCharacterLevel();
-		    players.get(i).incrementCharacterLevel();
-		    players.get(i).incrementPowerLevel();
-		    players.get(i).incrementPowerLevel();
-		    players.get(i).incrementPowerLevel();
-		    
-		    System.out.printf("\n%s\n%s\nMoney: %d\nLevel: %d\nPower Level: %d\n\n",
-	                players.get(i).getPlayerName(),
-	                players.get(i).getGender(),
-	                players.get(i).getMoney(),
-	                players.get(i).getCharacterLevel(),
-	                players.get(i).getPowerLevel());
-		    
-		    /*System.out.println("Decrement power. add 250 gold. gender swap.");
-		    players.get(i).decrementPowerLevel();
-		    players.get(i).addGold(250);
-		    players.get(i).genderSwap();
-		    
-		    System.out.printf("\n%s\n%s\nMoney: %d\nLevel: %d\nPower Level: %d\n\n",
-	                players.get(i).getPlayerName(),
-	                players.get(i).getGender(),
-	                players.get(i).getMoney(),
-	                players.get(i).getCharacterLevel(),
-	                players.get(i).getPowerLevel());*/
+		
+		for (int i = 0; i < numPlayers; i++) {
+		    MunchkinDriver munchkin = new MunchkinDriver();
+		    munchkin.setTitle(players.get(i).getPlayerName());
 		}
-	    MunchkinDriver munchkins = new MunchkinDriver();
 	}
-
-	/**
-	 * This method provides the definition for what happens
-	 * when a particular button is pressed.
-	 * 
-	 * @param event the action event occurring
-	 */
-	//@Override
-	/*public void actionPerformed(ActionEvent arg0)
-	{
-		// TODO Auto-generated method stub
-	}*/
 }
