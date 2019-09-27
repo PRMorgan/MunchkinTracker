@@ -43,6 +43,18 @@ public class MunchkinDriver extends JFrame
 			buttons[buttonIndex].setActionCommand(buttonCaptions[buttonIndex]);
 			buttonPanel.add(buttons[buttonIndex]);
 			buttons[buttonIndex].addActionListener(new MunchkinListener(powerLevel, gender));
+			
+			//set background color of the buttons
+			if (buttonIndex == 0) {
+				buttons[buttonIndex].setBackground(Color.RED);
+			} else if (buttonIndex == 1) {
+				buttons[buttonIndex].setBackground(Color.BLUE);
+			} else if (buttonIndex == 2) {
+				buttons[buttonIndex].setBackground(new Color(128, 0, 128)); //Purple
+			}
+			//set text color to white
+			buttons[buttonIndex].setForeground(Color.WHITE);
+			buttons[buttonIndex].setFont(new Font("SansSerif", Font.BOLD, 18));
 		}
 		
 		frame.setLayout(new FlowLayout());
@@ -56,7 +68,7 @@ public class MunchkinDriver extends JFrame
 		setVisible(true);
 		
 		powerLevel.setText("1"); //This effectively sets starting level to 1
-		gender.setText("Male"); //Set starting gender is male
+		gender.setText("Male"); //Set starting gender to male
 	}
 	
 	/** The main method to run the program.
@@ -78,11 +90,11 @@ public class MunchkinDriver extends JFrame
 		    String tempName = input.nextLine();
 		    
 		    // prompt for the character's initial gender
-		    System.out.printf("Player %d, please enter your character's gender: ", i+1);
-		    String tempGender = input.nextLine();
+		    //System.out.printf("Player %d, please enter your character's gender: ", i+1);
+		    //String tempGender = input.nextLine();
 		    
 		    // create the player object
-		    MunchkinCharacter player = new MunchkinCharacter(tempName, tempGender);
+		    MunchkinCharacter player = new MunchkinCharacter(tempName);//, tempGender);
 		    
 		    // add the player object to the ArrayList
 		    players.add(i, player);

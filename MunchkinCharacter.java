@@ -10,7 +10,7 @@ public class MunchkinCharacter {
     private int level = 1;
     private String playerName;
     private int powerLevel = 1;
-    private String gender;
+    //private String gender;
     private int money;
 
 /*******************************************************************/
@@ -19,10 +19,10 @@ public class MunchkinCharacter {
 	 * @param playerName The name of the player
 	 * @param tempGender The gender of the character
 	 */
-	public MunchkinCharacter(String name, String tempGender)
+	public MunchkinCharacter(String name)//, String tempGender)
 	{
 	    playerName = name;
-	    gender = tempGender;
+	    //gender = tempGender;
 	    money = 0;
 	}
 
@@ -134,18 +134,18 @@ public class MunchkinCharacter {
 	/** A method to return the gender of the character.
 	 * @return the gender of the character
 	 */
-	public String getGender()
+	/*public String getGender()
 	{
 	    return gender;
-	}
+	}*/
 
 	/** A method to switch the gender of the character.
 	 */
-	public void genderSwap()
-	{
+	/*public void genderSwap()
+	{*/
 	    /* If the character is currently male, switch them to female.
 	     * If the character is currently female, switch them to male.
 	     */
-	    gender = (gender.equalsIgnoreCase("male")) ? "female" : "male";
-	}
+	    //gender = (gender.equalsIgnoreCase("male")) ? "female" : "male";
+	//}
 }
